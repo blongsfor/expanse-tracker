@@ -1,6 +1,7 @@
 import EntryForm from "@/components/EntryForm";
 import MinusButton from "@/components/MinusButton";
 import PlusButton from "@/components/PlusButton";
+import MoneyList from "./moneyList";
 
 export default function HomePage() {
   return (
@@ -9,6 +10,7 @@ export default function HomePage() {
       <EntryForm />
       <PlusButton />
       <MinusButton />
+      <MoneyList />
     </>
   );
 }
