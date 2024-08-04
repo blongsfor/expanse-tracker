@@ -9,7 +9,7 @@ export default function MoneyList() {
 
   return (
     <div>
-      <h2></h2>
+      <h2>List of all expenses</h2>
       <ExpenseList expenses={data} />
     </div>
   );
