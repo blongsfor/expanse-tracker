@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import ExpenseList from "@/components/ExpenseList";
+import ExpenseList from "../components/ExpenseList";
 
 export default function MoneyList() {
   const { data, error, isLoading } = useSWR("/api/expenses");
