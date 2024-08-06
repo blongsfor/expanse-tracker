@@ -1,11 +1,13 @@
 import useSWR from "swr";
 import ExpenseList from "../components/ExpenseList";
 
+const fetcher = (url) => fetch(url).then((res) => res.json());
+
 export default function MoneyList() {
-  const { data, error, isLoading } = useSWR("/api/expenses");
+  const { data, error } = useSWR("/api/expenses", fetcher);
 
   if (error) return <div>failed to load</div>;
-  if (isLoading) return <div>loading...</div>;
+  if (!data) return <div>loading...</div>;
 
   return (
     <div>

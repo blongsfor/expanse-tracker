@@ -1,16 +1,4 @@
-import useSWR from "swr";
-
-export default function ExpenseList() {
-  const { data: expenses, error } = useSWR(`/api/expenses`);
-
-  if (!expenses && !error) {
-    return <h1>Loading ...</h1>;
-  }
-
-  if (error) {
-    return <h1>Error loading expense list</h1>;
-  }
-
+export default function ExpenseList({ expenses }) {
   if (!expenses) {
     return <h1>No expenses available</h1>;
   }
