@@ -1,7 +1,6 @@
 import EntryForm from "@/components/EntryForm";
 import MinusButton from "@/components/MinusButton";
 import PlusButton from "@/components/PlusButton";
-import MoneyList from "./moneyList";
 import Link from "next/link";
 
 export default function HomePage() {
@@ -11,7 +10,8 @@ export default function HomePage() {
       <EntryForm />
       <PlusButton />
       <MinusButton />
-      <Link href={`/moneyList`}>Go to the List</Link>
+      <Link href={`/expenseList`}>Go to Expense List</Link>
+      <Link href={`/incomeList`}>Go to Income List</Link>
     </>
   );
 }

@@ -3,7 +3,7 @@ import ExpenseList from "../components/ExpenseList";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
-export default function MoneyList() {
+export default function ExpensesList() {
   const { data, error } = useSWR("/api/expenses", fetcher);
 
   if (error) return <div>failed to load</div>;

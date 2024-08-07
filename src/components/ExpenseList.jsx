@@ -8,9 +8,10 @@ export default function ExpenseList({ expenses }) {
       {expenses.map((expense) => (
         <li key={expense._id}>
           <div>
-            <h2>
-              {expense.name} {expense.value}
-            </h2>
+            <h3>{expense.name}</h3>
+            <p>{expense.value}€</p>
+            <p>{expense.from}</p>
+            <p>{expense.date}</p>
           </div>
         </li>
       ))}
