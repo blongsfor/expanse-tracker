@@ -1,5 +1,6 @@
 import useSWR from "swr";
 import IncomeList from "../components/IncomeList";
+import BackButton from "@/components/BackButton";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -14,6 +15,7 @@ export default function IncomesList() {
 
   return (
     <div>
+      <BackButton />
       <h2>List of all income</h2>
       <IncomeList income={data} />
     </div>
