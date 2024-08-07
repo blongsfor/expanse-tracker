@@ -6,6 +6,7 @@ export default function EntryForm() {
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
   const [notes, setNotes] = useState("");
+  const [date, setDate] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -63,6 +64,16 @@ export default function EntryForm() {
           id="description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="date">Date:</label>
+        <input
+          type="date"
+          id="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
           required
         />
       </div>
