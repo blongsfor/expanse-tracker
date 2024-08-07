@@ -15,11 +15,11 @@ export default function BackButton() {
 }
 
 const buttonStyle = {
-  padding: "10px 20px",
+  padding: "10px 10px",
   backgroundColor: "#0070f3",
   color: "#fff",
   border: "none",
   borderRadius: "5px",
   cursor: "pointer",
-  fontSize: "16px",
+  fontSize: "12px",
 };
