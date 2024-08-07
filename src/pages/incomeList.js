@@ -6,6 +6,9 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 export default function IncomesList() {
   const { data, error } = useSWR("/api/income", fetcher);
 
+  console.log("SWR data:", data);
+  console.log("SWR error:", error);
+
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;
 
