@@ -5,7 +5,7 @@ import BackButton from "@/components/BackButton";
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function ExpensesList() {
-  const { data, error } = useSWR("/api/expenses", fetcher);
+  const { data, error } = useSWR("/api/expenses/expenses", fetcher);
 
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;

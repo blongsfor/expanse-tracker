@@ -1,28 +1,23 @@
 import useSWR from "swr";
 import { useRouter } from "next/router";
 
-export default function Income() {
+const fetcher = (url) => fetch(url).then((res) => res.json());
+
+export default function IncomeDetails() {
   const router = useRouter();
   const { id } = router.query;
+  const { data, error } = useSWR(id ? `/api/incomes/${id}` : null, fetcher);
 
-  const { data: income, error } = useSWR(`/api/income/${id}`);
+  if (error) return <div>Failed to load income</div>;
+  if (!data) return <div>Loading...</div>;
 
-  if (!income && !error) {
-    return <h1>Loading ...</h1>;
-  }
-
-  if (error) {
-    return <h1>Error loading income data</h1>;
-  }
-
-  if (!income) {
-    return <h1>Income data not available</h1>;
-  }
   return (
-    <>
-      <div>
-        <p>{income.name}</p>
-      </div>
-    </>
+    <div>
+      <h2>{data.description}</h2>
+      <p>Amount: {data.amount}€</p>
+      <p>Category: {data.category}</p>
+      <p>Date: {data.date}</p>
+      <p>Notes: {data.notes}</p>
+    </div>
   );
 }

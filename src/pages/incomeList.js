@@ -2,16 +2,20 @@ import useSWR from "swr";
 import IncomeList from "../components/IncomeList";
 import BackButton from "@/components/BackButton";
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+const fetcher = (url) =>
+  fetch(url).then((res) => {
+    console.log("Fetcher response status:", res.status);
+    return res.json();
+  });
 
 export default function IncomesList() {
-  const { data, error } = useSWR("/api/income", fetcher);
+  const { data, error } = useSWR("/api/incomes/income", fetcher);
 
   console.log("SWR data:", data);
   console.log("SWR error:", error);
 
-  if (error) return <div>failed to load</div>;
-  if (!data) return <div>loading...</div>;
+  if (error) return <div>Failed to load</div>;
+  if (!data) return <div>Loading...</div>;
 
   return (
     <div>

@@ -10,8 +10,6 @@ export default function EntryForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Hier können Sie die Logik zum Speichern des Eintrags implementieren
-    console.log({ entryType, category, amount, description, notes });
   };
 
   return (

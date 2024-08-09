@@ -1,5 +1,5 @@
-import dbConnect from "../../../lib/dbConnect";
-import Expenses from "../../../lib/models/expenses";
+import dbConnect from "../../../../lib/dbConnect";
+import Expenses from "../../../../lib/models/expenses";
 
 export default async function handler(req, res) {
   await dbConnect();
