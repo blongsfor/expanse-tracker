@@ -1,12 +1,26 @@
-export default function handler(req, res) {
-  const { id } = req.query;
+import dbConnect from "../../../../lib/dbConnect";
+import Expense from "../../../../lib/models/expenses";
 
-  // Assuming you have a way to find the item based on `id`
-  const expenseItem = findExpenseById(id); // Replace with your actual data fetching logic
+export default async function handler(request, response) {
+  await dbConnect();
+  const { id } = request.query;
 
-  if (!expenseItem) {
-    return res.status(404).json({ error: "Expense not found" });
+  if (request.method === "GET") {
+    try {
+      const expense = await Expense.findById(id);
+      if (!expense) {
+        return response.status(404).json({ status: "No Expense Found" });
+      }
+      response.status(200).json(expense);
+    } catch (error) {
+      console.error("Error fetching expense:", error);
+      response
+        .status(500)
+        .json({ status: "Server error", error: error.message });
+    }
+  } else {
+    response
+      .status(405)
+      .json({ status: `Method ${request.method} not allowed` });
   }
-
-  return res.status(200).json(expenseItemItem);
 }

@@ -1,16 +1,17 @@
 import dbConnect from "../../../../lib/dbConnect";
-import Expenses from "../../../../lib/models/expenses";
+import Expense from "../../../../lib/models/expenses";
 
 export default async function handler(req, res) {
   await dbConnect();
 
-  console.log("request method:", req.method);
-
   try {
-    switch (req.method) {
-      case "GET":
-        const expenses = await Expenses.find().lean();
-        return res.status(200).json(expenses);
+    if (req.method === "GET") {
+      const expenses = await Expense.find().lean();
+      return res.status(200).json(expenses);
+    } else {
+      return res
+        .status(405)
+        .json({ error: `Method ${req.method} not allowed` });
     }
   } catch (error) {
     console.error("Error:", error);
