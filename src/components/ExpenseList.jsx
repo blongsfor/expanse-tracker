@@ -8,7 +8,7 @@ export default function ExpenseList({ expenses }) {
   }
 
   const handleItemClick = (id) => {
-    router.push(`/expenses/${id}`);
+    router.push(`/expense/${id}`);
   };
 
   return (
