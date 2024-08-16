@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 
+// ExpenseList.jsx
 export default function ExpenseList({ expenses }) {
   const router = useRouter();
 
@@ -20,10 +21,10 @@ export default function ExpenseList({ expenses }) {
           style={{ cursor: "pointer" }}
         >
           <div>
-            <h3>{singleExpense.description}</h3>
-            <p>Amount: {singleExpense.amount}€</p>
-            <p>Category: {singleExpense.category}</p>
-            <p>Date: {singleExpense.date}</p>
+            <h3>{singleExpense.name}</h3>
+            <p>Amount: {singleExpense.value}€</p>
+            <p>Category: {singleExpense.from}</p>
+            <p>Date: {new Date(singleExpense.date).toLocaleDateString()}</p>
             <p>Notes: {singleExpense.notes}</p>
           </div>
         </li>

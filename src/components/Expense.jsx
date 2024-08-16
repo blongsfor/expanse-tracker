@@ -1,7 +1,5 @@
-import useSWR from "swr";
 import { useRouter } from "next/router";
-
-const fetcher = (url) => fetch(url).then((res) => res.json());
+import useSWR from "swr";
 
 export default function ExpenseDetails() {
   const router = useRouter();
@@ -13,11 +11,12 @@ export default function ExpenseDetails() {
 
   return (
     <div>
-      <h2>{data.description}</h2>
-      <p>Amount: {data.amount}€</p>
-      <p>Category: {data.category}</p>
-      <p>Date: {data.date}</p>
+      <h2>{data.name}</h2>
+      <p>Amount: {data.value}€</p>
+      <p>Category: {data.from}</p>
+      <p>Date: {new Date(data.date).toLocaleDateString()}</p>
       <p>Notes: {data.notes}</p>
+      <p>Description: {data.description}</p>
     </div>
   );
 }

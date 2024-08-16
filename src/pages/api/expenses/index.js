@@ -33,15 +33,16 @@ export default async function handler(req, res) {
         return res.status(200).json(expenses);
 
       case "POST":
-        const { name, from, value, date } = req.body;
-
-        if (!name || !from || !value || !date) {
-          return res.status(400).json({ error: "Missing required fields" });
-        }
-
-        const newExpense = new Expense({ name, from, value, date });
+        const { name, from, value, date, description, notes } = req.body;
+        const newExpense = new Expense({
+          name,
+          from,
+          value,
+          date: new Date(date),
+          description,
+          notes,
+        });
         await newExpense.save();
-
         return res.status(201).json({ status: "Expense saved successfully" });
 
       default:

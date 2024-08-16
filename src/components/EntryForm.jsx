@@ -100,53 +100,45 @@ export default function EntryForm() {
   const [description, setDescription] = useState("");
   const [notes, setNotes] = useState("");
   const [date, setDate] = useState("");
-  const [error, setError] = useState(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const payload = {
-      name: category,
-      from: "source", // Replace this with actual data if needed
-      value: amount,
-      date,
+    const data = {
+      name: description,
+      from: category,
+      value: parseFloat(amount),
+      date: new Date(date).toISOString(),
+      description,
+      notes,
     };
 
     const endpoint = entryType === "expense" ? "/api/expenses" : "/api/incomes";
 
     try {
-      setIsSubmitting(true);
-      setError(null);
-
       const response = await fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(data),
       });
 
       if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(
-          `Failed to submit the form. Status: ${response.status}. Message: ${errorText}`
-        );
+        throw new Error("Failed to submit data");
       }
 
-      alert("Entry added successfully!");
-      // Reset form fields
-      setEntryType("expense");
+      const result = await response.json();
+      console.log("Success:", result);
+
+      // Reset form fields here
       setCategory("");
       setAmount("");
       setDescription("");
       setNotes("");
       setDate("");
     } catch (error) {
-      setError(error.message);
       console.error("Error:", error);
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -175,7 +167,7 @@ export default function EntryForm() {
           <option value="housing">Housing</option>
           <option value="salary">Salary</option>
           <option value="groceries">Groceries</option>
-          <option value="transportation">Transport</option>
+          <option value="transportation">Transportation</option>
           <option value="entertainment">Entertainment</option>
           <option value="other">Other</option>
         </select>
@@ -224,11 +216,7 @@ export default function EntryForm() {
         />
       </div>
 
-      <button type="submit" disabled={isSubmitting}>
-        {isSubmitting ? "Submitting..." : "Add Entry"}
-      </button>
-
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      <button type="submit">Add Entry</button>
     </form>
   );
 }
