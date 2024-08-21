@@ -5,16 +5,27 @@ export default async function handler(req, res) {
   await dbConnect();
 
   try {
-    if (req.method === "GET") {
-      const expenses = await Expense.find().lean();
-      return res.status(200).json(expenses);
-    } else {
-      return res
-        .status(405)
-        .json({ error: `Method ${req.method} not allowed` });
+    switch (req.method) {
+      case "GET":
+        const expenses = await Expense.find().lean();
+        return res.status(200).json(expenses);
+      case "POST":
+        const { entryType, category, amount, date, description, notes } =
+          req.body;
+
+        const newExpense = new Expense({
+          entryType,
+          category,
+          amount,
+          date,
+          description,
+          notes,
+        });
+        const savedExpense = await newExpense.save();
+        return res.status(201).json(savedExpense);
     }
   } catch (error) {
-    console.error("Error:", error);
+    console.error("Error in API route:", error);
     return res.status(500).json({ error: "Server error" });
   }
 }

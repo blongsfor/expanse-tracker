@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 export default function EntryForm() {
   const [income, setIncome] = useState([]);
+  const [expenses, setExpenses] = useState([]);
   const [entryType, setEntryType] = useState("expense");
   const [category, setCategory] = useState("");
   const [amount, setAmount] = useState("");
@@ -13,23 +14,32 @@ export default function EntryForm() {
     event.preventDefault();
 
     try {
-      const res = await fetch("/api/incomes/incomes", {
+      const apiEndpoint =
+        entryType === "income"
+          ? "/api/incomes/incomes"
+          : "/api/expenses/expenses";
+
+      const res = await fetch(apiEndpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          entryType: entryType, // Include entryType
-          category: category, // Include category
-          amount: parseFloat(amount), // Use amount
-          date: new Date(date), // Use date
-          description: description, // Include description
-          notes: notes, // Include notes
+          entryType: entryType,
+          category: category,
+          amount: parseFloat(amount),
+          date: new Date(date),
+          description: description,
+          notes: notes,
         }),
       });
       const data = await res.json();
       if (res.ok) {
-        setIncome([data, ...income]);
+        if (entryType === "income") {
+          setIncome([data, ...income]);
+        } else {
+          setExpenses([data, ...expenses]);
+        }
         setEntryType("expense");
         setCategory("");
         setAmount("");
@@ -37,11 +47,11 @@ export default function EntryForm() {
         setNotes("");
         setDate("");
       } else {
-        throw new Error(data.error || "Failed to save income");
+        throw new Error(data.error || "Failed to save entry");
       }
     } catch (error) {
-      console.error("Error adding Income:", error);
-      alert("There was an error adding the income. Please try again.");
+      console.error("Error adding entry:", error);
+      alert("There was an error adding the entry. Please try again.");
     }
   };
 

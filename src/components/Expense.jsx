@@ -1,5 +1,6 @@
 import useSWR from "swr";
 import { useRouter } from "next/router";
+import { format, parseISO } from "date-fns";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -16,7 +17,7 @@ export default function ExpenseDetails() {
       <h2>{data.description}</h2>
       <p>Amount: {data.amount}€</p>
       <p>Category: {data.category}</p>
-      <p>Date: {data.date}</p>
+      <p>Date: {format(parseISO(data.date), "dd.MM.yyyy")}</p>
       <p>Notes: {data.notes}</p>
     </div>
   );
