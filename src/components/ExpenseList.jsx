@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { format, parseISO } from "date-fns";
 
 export default function ExpenseList({ expenses }) {
   const router = useRouter();
@@ -23,7 +24,7 @@ export default function ExpenseList({ expenses }) {
             <h3>{singleExpense.description}</h3>
             <p>Amount: {singleExpense.amount}€</p>
             <p>Category: {singleExpense.category}</p>
-            <p>Date: {singleExpense.date}</p>
+            <p>Date: {format(parseISO(singleExpense.date), "dd.MM.yyyy")}</p>
             <p>Notes: {singleExpense.notes}</p>
           </div>
         </li>

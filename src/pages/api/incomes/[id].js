@@ -13,5 +13,8 @@ export default async function handler(request, response) {
     }
 
     response.status(200).json(income);
+  } else {
+    response.setHeader("Allow", ["GET"]);
+    response.status(405).end(`Method ${request.method} Not Allowed`);
   }
 }

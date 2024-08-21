@@ -1,5 +1,5 @@
 import dbConnect from "../../../../lib/dbConnect";
-import Expense from "../../../../lib/models/expenses";
+import Income from "../../../../lib/models/income";
 
 export default async function handler(req, res) {
   await dbConnect();
@@ -7,13 +7,13 @@ export default async function handler(req, res) {
   try {
     switch (req.method) {
       case "GET":
-        const expenses = await Expense.find().lean();
-        return res.status(200).json(expenses);
+        const incomes = await Income.find().lean();
+        return res.status(200).json(incomes);
       case "POST":
         const { entryType, category, amount, date, description, notes } =
           req.body;
 
-        const newExpense = new Expense({
+        const newIncome = new Income({
           entryType,
           category,
           amount,
@@ -21,8 +21,8 @@ export default async function handler(req, res) {
           description,
           notes,
         });
-        const savedExpense = await newExpense.save();
-        return res.status(201).json(savedExpense);
+        const savedIncome = await newIncome.save();
+        return res.status(201).json(savedIncome);
     }
   } catch (error) {
     console.error("Error in API route:", error);
