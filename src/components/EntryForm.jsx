@@ -8,8 +8,22 @@ export default function EntryForm() {
   const [notes, setNotes] = useState("");
   const [date, setDate] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const res = await fetch("/api/incomes/income", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ task: newIncome }),
+      });
+      const data = await res.json();
+      setIncome([data, ...income]);
+      setNewIncome("");
+    } catch (error) {
+      console.error("Error adding Income:", error);
+    }
   };
 
   return (
