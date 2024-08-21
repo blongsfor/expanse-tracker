@@ -9,7 +9,7 @@ const fetcher = (url) =>
   });
 
 export default function IncomesList() {
-  const { data, error } = useSWR("/api/incomes/income", fetcher);
+  const { data, error } = useSWR("/api/incomes/incomes", fetcher);
 
   console.log("SWR data:", data);
   console.log("SWR error:", error);
