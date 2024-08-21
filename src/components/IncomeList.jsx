@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { format, parseISO } from "date-fns";
 
 export default function IncomeList({ income }) {
   const router = useRouter();
@@ -23,7 +24,7 @@ export default function IncomeList({ income }) {
             <h3>{singleIncome.description}</h3>
             <p>Amount: {singleIncome.amount}€</p>
             <p>Category: {singleIncome.category}</p>
-            <p>Date: {singleIncome.date}</p>
+            <p>Date: {format(parseISO(singleIncome.date), "dd.MM.yyyy")}</p>
             <p>Notes: {singleIncome.notes}</p>
           </div>
         </li>
