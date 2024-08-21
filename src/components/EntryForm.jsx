@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 export default function EntryForm() {
+  const [income, setIncome] = useState([]);
   const [entryType, setEntryType] = useState("expense");
   const [category, setCategory] = useState("");
   const [amount, setAmount] = useState("");
@@ -10,19 +11,37 @@ export default function EntryForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     try {
-      const res = await fetch("/api/incomes/income", {
+      const res = await fetch("/api/incomes/incomes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ task: newIncome }),
+        body: JSON.stringify({
+          entryType: entryType, // Include entryType
+          category: category, // Include category
+          amount: parseFloat(amount), // Use amount
+          date: new Date(date), // Use date
+          description: description, // Include description
+          notes: notes, // Include notes
+        }),
       });
       const data = await res.json();
-      setIncome([data, ...income]);
-      setNewIncome("");
+      if (res.ok) {
+        setIncome([data, ...income]);
+        setEntryType("expense");
+        setCategory("");
+        setAmount("");
+        setDescription("");
+        setNotes("");
+        setDate("");
+      } else {
+        throw new Error(data.error || "Failed to save income");
+      }
     } catch (error) {
       console.error("Error adding Income:", error);
+      alert("There was an error adding the income. Please try again.");
     }
   };
 
