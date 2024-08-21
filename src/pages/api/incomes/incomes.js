@@ -9,10 +9,6 @@ export default async function handler(req, res) {
       case "GET":
         const income = await Income.find().lean();
         return res.status(200).json(income);
-      default:
-        return res
-          .status(405)
-          .json({ error: `Method ${req.method} not allowed` });
 
       case "POST":
         const { entrytype, category, amount, date, description, notes } =
@@ -26,7 +22,12 @@ export default async function handler(req, res) {
           notes,
         });
         const savedIncome = await newIncome.save();
-        return res.status(201) - json(savedIncome);
+        return res.status(201).json(savedIncome);
+
+      default:
+        return res
+          .status(405)
+          .json({ error: `Method ${req.method} not allowed` });
     }
   } catch (error) {
     // Keep this log for error tracking
