@@ -21,6 +21,26 @@ export default async function handler(request, response) {
       }
       break;
 
+    case "PUT":
+      try {
+        const updatedIncome = await Income.findByIdAndUpdate(id, request.body, {
+          new: true,
+          runValidators: true,
+        });
+
+        if (!updatedIncome) {
+          return response.status(404).json({ status: "No Income Found" });
+        }
+
+        response.status(200).json(updatedIncome);
+      } catch (error) {
+        console.error("Error updating income:", error);
+        response
+          .status(500)
+          .json({ status: "Server error", error: error.message });
+      }
+      break;
+
     case "DELETE":
       try {
         const deletedIncome = await Income.findByIdAndDelete(id);
