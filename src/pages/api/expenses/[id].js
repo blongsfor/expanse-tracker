@@ -23,7 +23,6 @@ export default async function handler(request, response) {
 
     case "DELETE":
       try {
-        // Convert id to ObjectId if necessary
         const deletedExpense = await Expense.findByIdAndDelete(id);
         if (!deletedExpense) {
           return response.status(404).json({ status: "No Expense Found" });
