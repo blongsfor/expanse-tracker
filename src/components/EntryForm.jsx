@@ -38,7 +38,6 @@ export default function EntryForm({
 
   return (
     <form onSubmit={handleSubmit}>
-      {/* Form fields as before */}
       <div>
         <label htmlFor="entryType">Type:</label>
         <select

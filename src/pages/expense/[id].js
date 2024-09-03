@@ -32,7 +32,7 @@ export default function ExpensePage() {
       });
 
       if (response.ok) {
-        setIsEditing(false); // Exit edit mode
+        setIsEditing(false);
       } else {
         throw new Error("Failed to update entry");
       }
