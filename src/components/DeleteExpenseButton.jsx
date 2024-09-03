@@ -1,19 +1,16 @@
-// /components/DeleteEntryButton.jsx
-
 import React from "react";
 
-const DeleteEntryButton = ({ onDelete, id }) => {
-  // Ensure id prop is received
+const DeleteExpenseButton = ({ onDelete, id }) => {
   const handleDelete = async () => {
     if (!confirm("Are you sure you want to delete this entry?")) {
       return;
     }
 
     try {
-      const response = await fetch(`/api/expenses/${id}`, { method: "DELETE" }); // Use the id prop here
+      const response = await fetch(`/api/expenses/${id}`, { method: "DELETE" });
 
       if (response.ok) {
-        onDelete(); // Execute the onDelete function after successful deletion
+        onDelete();
       } else {
         console.error("Failed to delete entry:", response);
       }
@@ -29,7 +26,7 @@ const DeleteEntryButton = ({ onDelete, id }) => {
   );
 };
 
-export default DeleteEntryButton;
+export default DeleteExpenseButton;
 
 const buttonStyle = {
   padding: "10px 10px",
