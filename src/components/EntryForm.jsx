@@ -1,64 +1,45 @@
 import React, { useState } from "react";
 
-export default function EntryForm() {
-  const [income, setIncome] = useState([]);
-  const [expenses, setExpenses] = useState([]);
-  const [entryType, setEntryType] = useState("expense");
-  const [category, setCategory] = useState("");
-  const [amount, setAmount] = useState("");
-  const [description, setDescription] = useState("");
-  const [notes, setNotes] = useState("");
-  const [date, setDate] = useState("");
+export default function EntryForm({
+  initialData = {},
+  onSubmit,
+  isEditMode = false,
+}) {
+  const [entryType, setEntryType] = useState(
+    initialData.entryType || "expense"
+  );
+  const [category, setCategory] = useState(initialData.category || "");
+  const [amount, setAmount] = useState(initialData.amount || "");
+  const [description, setDescription] = useState(initialData.description || "");
+  const [notes, setNotes] = useState(initialData.notes || "");
+  const [date, setDate] = useState(
+    initialData.date ? initialData.date.slice(0, 10) : ""
+  );
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    try {
-      const apiEndpoint =
-        entryType === "income"
-          ? "/api/incomes/incomes"
-          : "/api/expenses/expenses";
+    const entryData = {
+      entryType,
+      category,
+      amount: parseFloat(amount),
+      date: new Date(date),
+      description,
+      notes,
+    };
 
-      const res = await fetch(apiEndpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          entryType: entryType,
-          category: category,
-          amount: parseFloat(amount),
-          date: new Date(date),
-          description: description,
-          notes: notes,
-        }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        if (entryType === "income") {
-          setIncome([data, ...income]);
-        } else {
-          setExpenses([data, ...expenses]);
-        }
-        setEntryType("expense");
-        setCategory("");
-        setAmount("");
-        setDescription("");
-        setNotes("");
-        setDate("");
-      } else {
-        throw new Error(data.error || "Failed to save entry");
-      }
+    try {
+      await onSubmit(entryData);
     } catch (error) {
-      console.error("Error adding entry:", error);
-      alert("There was an error adding the entry. Please try again.");
+      console.error("Error submitting form:", error);
+      alert("There was an error processing the form. Please try again.");
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label htmlFor="entryType">Typ:</label>
+        <label htmlFor="entryType">Type:</label>
         <select
           id="entryType"
           value={entryType}
@@ -81,7 +62,7 @@ export default function EntryForm() {
           <option value="salary">Salary</option>
           <option value="groceries">Groceries</option>
           <option value="transportation">Transport</option>
-          <option value="entertainment">Enternainment</option>
+          <option value="entertainment">Entertainment</option>
           <option value="other">Other</option>
         </select>
       </div>
@@ -128,7 +109,7 @@ export default function EntryForm() {
         />
       </div>
 
-      <button type="submit">Add Entry</button>
+      <button type="submit">{isEditMode ? "Save Changes" : "Add Entry"}</button>
     </form>
   );
 }
