@@ -23,7 +23,7 @@ export default function Home() {
       <div style={styles.container}>
         {session ? (
           <div>
-            <h1>Welcome to the Home Page</h1>
+            <h1>Welcome to the Expense Tracker</h1>
             <p>You're signed in as {session.user.name}</p>
             <Link href="/home">Add / Edit / Delete</Link>
           </div>
